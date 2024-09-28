@@ -11,7 +11,10 @@ def main():
         asg.problems_assignment_1(current_directory, problem_to_run)
     elif assignment_to_run==2:
         problem_to_run=int(input("enter number of problem to run (for example, if you want to run problem 1, please insert 1:"))
-        asg.problems_assignment_2(current_directory, problem_to_run)	
+        asg.problems_assignment_2(current_directory, problem_to_run)
+        if (problem_to_run==3 or problem_to_run==4 or problem_to_run==5):
+            shutil.rmtree(current_directory+"/assignment2/matrix/__pycache__")
+            print("cache successufully deleted")
     else:
         print("That is not a valid assignment to be run.Please try again")
         print("Unsuccessfully executed")

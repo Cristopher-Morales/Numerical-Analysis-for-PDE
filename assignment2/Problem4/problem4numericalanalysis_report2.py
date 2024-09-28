@@ -7,6 +7,7 @@ Created on Tue Feb  4 11:43:13 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.sparse as sp
+from assignment2.matrix import SparseMatrices as spm
 
 a=0
 b=4
@@ -20,9 +21,6 @@ alpha=-50
 
 cwave=2
 
-
-
-
 hx=h
 hy=h
 dt=np.sqrt(1/2)*0.99*h/cwave
@@ -34,30 +32,7 @@ Nx=int((b-a)/hx)
 Ny=int((d-c)/hy)
 x,y=h*np.mgrid[0:Nx+1,0:Ny+1]
 
-# sparse matrix
-
-def sparsematrix(a,b,hx):
-    N=int((b-a)/hx)
-    updiag=np.ones(N-1)
-    downdiag=-1*np.ones(N-1)
-    dim=(N,N-1)
-    D=1/hx*(sp.diags([updiag,downdiag],[0,-1],shape=dim))
-    return D
-
-# Laplace matrix
-    
-def Laplace2dmatrix(a,b,c,d,hx,hy):
-    Dx=sparsematrix(a,b,hx)
-    Dy=sparsematrix(c,d,hy)
-    Lxx=Dx.transpose().dot(Dx)
-    Lyy=Dy.transpose().dot(Dy)
-    Ix=sp.eye(int(b-a)/hx-1)
-    Iy=sp.eye(int(d-c)/hy-1)
-    L=sp.kron(Iy,Lxx)+sp.kron(Lyy,Ix)
-    
-    return L
-
-L=Laplace2dmatrix(a,b,c,d,hx,hy)
+L=spm.Laplace2dmatrix(a,b,c,d,hx,hy)
 
 
 

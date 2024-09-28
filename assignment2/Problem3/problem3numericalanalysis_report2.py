@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.sparse as sp
 import scipy.sparse.linalg as la
+from assignment2.matrix import SparseMatrices as spm
 
 a=0
 b=4
@@ -24,30 +25,7 @@ Nx=int((b-a)/hx)
 Ny=int((d-c)/hy)
 x,y=hx*np.mgrid[0:Nx+1,0:Ny+1]
 
-# sparse matrix
-
-def sparsematrix(a,b,hx):
-    N=int((b-a)/hx)
-    updiag=np.ones(N-1)
-    downdiag=-1*np.ones(N-1)
-    dim=(N,N-1)
-    D=1/hx*(sp.diags([updiag,downdiag],[0,-1],shape=dim))
-    return D
-
-# Laplace matrix
-    
-def Laplace2dmatrix(a,b,c,d,hx,hy):
-    Dx=sparsematrix(a,b,hx)
-    Dy=sparsematrix(c,d,hy)
-    Lxx=Dx.transpose().dot(Dx)
-    Lyy=Dy.transpose().dot(Dy)
-    Ix=sp.eye(int(b-a)/hx-1)
-    Iy=sp.eye(int(d-c)/hy-1)
-    L=sp.kron(Iy,Lxx)+sp.kron(Lyy,Ix)
-    
-    return L
-
-L=Laplace2dmatrix(a,b,c,d,hx,hy)
+L=spm.Laplace2dmatrix(a,b,c,d,hx,hy)
 
 # PART C)
 
@@ -189,7 +167,7 @@ for hx in hxs:
     Nx=int((b-a)/hx)
     Ny=int((d-c)/hy)
     x,y=np.mgrid[0:(b-a):hx,0:(d-c):hy]
-    L=Laplace2dmatrix(a,b,c,d,hx,hy)
+    L=spm.Laplace2dmatrix(a,b,c,d,hx,hy)
     # forward euler solution
     #initial condition
     u0 = np.exp(-alpha*(x-2)**2-alpha*(y-2)**2)
