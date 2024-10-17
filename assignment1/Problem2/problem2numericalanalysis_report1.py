@@ -6,7 +6,6 @@ Created on Sat Sep 28 06:09:52 2019
 """
 
 import numpy as np
-import math
 import matplotlib.pyplot as plt 
 
 # part a) 

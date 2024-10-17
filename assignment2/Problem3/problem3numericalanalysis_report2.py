@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.sparse as sp
 import scipy.sparse.linalg as la
-from assignment2.matrix import SparseMatrices as spm
+from utils import SparseMatrices as spm
 
 a=0
 b=4

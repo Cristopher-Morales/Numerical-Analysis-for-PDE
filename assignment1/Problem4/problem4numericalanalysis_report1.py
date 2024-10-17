@@ -9,8 +9,9 @@ Created on Sat Oct 12 07:18:31 2019
 
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.sparse as sp
 import scipy.sparse.linalg as la
+from utils.meshGrid import meshgrid as mg
+import utils.SparseMatrices as spm
 
 a=0
 b=2
@@ -21,38 +22,14 @@ hy=0.02
 Nx=int((b-a)/hx)
 Ny=int((d-c)/hy)
 
-def sparsematrix(a,b,h):
-    N=int((b-a)/h)
-    updiag=np.ones(N-1)
-    downdiag=-1*np.ones(N-1)
-    dim=(N,N-1)
-    D=1/h*(sp.diags([updiag,downdiag],[0,-1],shape=dim))
-    return D
-
-def Laplace2dmatrix(a,b,c,d,hx,hy):
-    Dx=sparsematrix(a,b,hx)
-    Dy=sparsematrix(c,d,hy)
-    Lxx=Dx.transpose().dot(Dx)
-    Lyy=Dy.transpose().dot(Dy)
-    Ix=sp.eye(int(b-a)/hx-1)
-    Iy=sp.eye(int(d-c)/hy-1)
-    L=sp.kron(Iy,Lxx)+sp.kron(Lyy,Ix) 
-    return L
-
-def meshgrid(a,b,c,d,hx,hy):
-    Nx=int((b-a)/hx)
-    Ny=int((d-c)/hy)
-    A=np.mgrid[0:Nx+1,0:Ny+1]   
-    return hx*A
-
-Dx=sparsematrix(a,b,hx)
-Dy=sparsematrix(c,d,hy)
+Dx=spm.sparsematrix(a,b,hx)
+Dy=spm.sparsematrix(c,d,hy)
 plt.spy(Dx,marker='o')
 plt.show()
-L=Laplace2dmatrix(a,b,c,d,hx,hy)
+L=spm.Laplace2dmatrix(a,b,c,d,hx,hy)
 plt.spy(L,marker='o')
 plt.show()
-x,y=meshgrid(a,b,c,d,hx,hy)
+x,y=mg(a,b,c,d,hx,hy)
 print(x,y)
 f = 20*np.sin(1.5*x*np.pi+np.pi)*np.sin(np.pi*y)
 plt.imshow(f,extent = [np.min(x) , np.max(x), np.min(y) , np.max(y)],origin='lower',interpolation='none')

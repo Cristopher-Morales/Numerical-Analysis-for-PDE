@@ -6,8 +6,7 @@ Created on Wed Feb  5 12:02:28 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.sparse as sp
-from assignment2.matrix import SparseMatrices as spm
+from utils import SparseMatrices as spm
 
 a=0
 b=16

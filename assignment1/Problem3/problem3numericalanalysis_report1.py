@@ -10,6 +10,8 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt 
 import scipy.optimize as optimize
+from utils.SparseMatrices import Laplacematrix
+from utils.meshGrid import gridpoints
 
 # part b)
 
@@ -18,19 +20,6 @@ a=0
 b=1
 u0=1
 uN=2
-
-def gridpoints(a,b,h):
-    N=int(((b-a)/h)+1)
-    gridpoints=np.linspace(a,b,N)
-    return [gridpoints,N]
-
-def Laplacematrix(a,b,h):
-    N=int(((b-a)/h)+1)
-    diagonal = 2.0*np.ones(N-2) 
-    upanddown = -1.0*np.ones(N-3)
-    A=np.diag(diagonal,0)+np.diag(upanddown,-1)+np.diag(upanddown,1)
-    Laplacematrix=(1/h**2)*A
-    return Laplacematrix
 
 def GlobalError(k):
     hk=0.2/2**k
